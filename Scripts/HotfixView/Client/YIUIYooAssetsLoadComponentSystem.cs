@@ -65,8 +65,10 @@ namespace ET.Client
         /// <param name="arg2">资源名</param>
         /// <param name="arg3">类型</param>
         /// <returns>返回值(obj资源对象,唯一ID)</returns>
-        private static async ETTask<(UnityEngine.Object, int)> LoadAssetAsyncFunc(this YIUIYooAssetsLoadComponent self, string arg1,
-                                                                                  string                          arg2, Type   arg3)
+        private static async ETTask<(UnityEngine.Object, int)> LoadAssetAsyncFunc(this YIUIYooAssetsLoadComponent self,
+                                                                                  string                          arg1,
+                                                                                  string                          arg2,
+                                                                                  Type                            arg3)
         {
             var handle = self.m_Package.LoadAssetAsync(arg2, arg3);
             await handle.Task;
@@ -118,6 +120,34 @@ namespace ET.Client
         private static bool VerifyAssetValidityFunc(this YIUIYooAssetsLoadComponent self, string arg1, string arg2)
         {
             return self.m_Package.CheckLocationValid(arg2);
+        }
+
+        /// <summary>
+        /// 获取当前的资源包
+        /// </summary>
+        public static ResourcePackage GetPackage(this YIUIYooAssetsLoadComponent self)
+        {
+            return self.m_Package;
+        }
+
+        /// <summary>
+        /// 获取资源信息
+        /// </summary>
+        /// <param name="location">资源的定位地址</param>
+        /// <param name="type">资源类型</param>
+        public static AssetInfo GetAssetInfo(this YIUIYooAssetsLoadComponent self, string location, Type type = null)
+        {
+            return self.m_Package?.GetAssetInfo(location, type);
+        }
+
+        /// <summary>
+        /// 获取资源信息
+        /// </summary>
+        /// <param name="assetGUID">资源GUID</param>
+        /// <param name="type">资源类型</param>
+        public static AssetInfo GetAssetInfoByGUID(this YIUIYooAssetsLoadComponent self, string assetGUID, Type type = null)
+        {
+            return self.m_Package?.GetAssetInfoByGUID(assetGUID, type);
         }
     }
 }

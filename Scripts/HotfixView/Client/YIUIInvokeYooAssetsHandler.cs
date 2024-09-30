@@ -1,4 +1,7 @@
-﻿namespace ET.Client
+﻿using YIUIFramework;
+using YooAsset;
+
+namespace ET.Client
 {
     [Invoke]
     public class YIUIInvokeYooAssetsHandler : AInvokeHandler<YIUIInvokeLoadInitialize, ETTask<bool>>
@@ -15,6 +18,24 @@
             await ETTask.CompletedTask;
 
             return loadComponent.AddComponent<YIUIYooAssetsLoadComponent>().Initialize();
+        }
+    }
+
+    [Invoke(EYIUIInvokeType.Sync)]
+    public class YIUIInvokeGetAssetsInfoSyncHandler : AInvokeHandler<YIUIInvokeGetAssetInfo, AssetInfo>
+    {
+        public override AssetInfo Handle(YIUIInvokeGetAssetInfo args)
+        {
+            return YIUILoadComponent.Inst?.GetComponent<YIUIYooAssetsLoadComponent>().GetAssetInfo(args.Location, args.AssetType);
+        }
+    }
+
+    [Invoke(EYIUIInvokeType.Sync)]
+    public class YIUIInvokeGetAssetInfoByGUIDSyncHandler : AInvokeHandler<YIUIInvokeGetAssetInfoByGUID, AssetInfo>
+    {
+        public override AssetInfo Handle(YIUIInvokeGetAssetInfoByGUID args)
+        {
+            return YIUILoadComponent.Inst?.GetComponent<YIUIYooAssetsLoadComponent>().GetAssetInfoByGUID(args.AssetGUID, args.AssetType);
         }
     }
 }
