@@ -70,8 +70,10 @@ namespace ET.Client
                                                                                   string                          arg2,
                                                                                   Type                            arg3)
         {
+            EntityRef<YIUIYooAssetsLoadComponent> selfRef = self;
             var handle = self.m_Package.LoadAssetAsync(arg2, arg3);
             await handle.Task;
+            self = selfRef;
             return self.LoadAssetHandle(handle);
         }
 
