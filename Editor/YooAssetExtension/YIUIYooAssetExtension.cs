@@ -26,4 +26,22 @@ namespace YooAsset.Editor
             return true;
         }
     }
+    
+    /// <summary>
+    /// 以收集器路径作为资源包名
+    /// 注意：收集的所有文件打进一个资源包
+    /// </summary>
+    [DisplayName("收集YIUI图集")]
+    public class YIUIFilterRule_Atlas : IFilterRule
+    {
+        public bool IsCollectAsset(FilterRuleData data)
+        {
+            if (Path.GetExtension(data.AssetPath) == ".spriteatlas")
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 }
