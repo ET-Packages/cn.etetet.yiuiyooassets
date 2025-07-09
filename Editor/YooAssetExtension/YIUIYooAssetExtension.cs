@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 
 namespace YooAsset.Editor
 {
@@ -18,7 +18,7 @@ namespace YooAsset.Editor
             }
 
             // 忽略掉图集
-            if (Path.GetExtension(data.AssetPath) == ".spriteatlas")
+            if (Path.GetExtension(data.AssetPath) == ".spriteatlas" || Path.GetExtension(data.AssetPath) == ".spriteatlasv2")
             {
                 return false;
             }
@@ -36,7 +36,7 @@ namespace YooAsset.Editor
     {
         public bool IsCollectAsset(FilterRuleData data)
         {
-            if (Path.GetExtension(data.AssetPath) == ".spriteatlas")
+            if (Path.GetExtension(data.AssetPath) == ".spriteatlas" || Path.GetExtension(data.AssetPath) == ".spriteatlasv2")
             {
                 return true;
             }
