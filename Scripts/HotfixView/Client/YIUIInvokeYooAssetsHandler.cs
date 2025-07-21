@@ -15,9 +15,7 @@ namespace ET.Client
                 return false;
             }
 
-            await ETTask.CompletedTask;
-
-            return loadComponentRef.Entity.AddComponent<YIUIYooAssetsLoadComponent>().Initialize();
+            return await loadComponentRef.Entity.AddComponent<YIUIYooAssetsLoadComponent>().Initialize();
         }
     }
 

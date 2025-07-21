@@ -25,7 +25,7 @@ namespace ET.Client
 
         #endregion
 
-        public static bool Initialize(this YIUIYooAssetsLoadComponent self, string packageName = "DefaultPackage")
+        public static async ETTask<bool> Initialize(this YIUIYooAssetsLoadComponent self, string packageName = "DefaultPackage")
         {
             self.m_Package = YooAssets.GetPackage(packageName);
             if (self.m_Package == null)
@@ -40,6 +40,8 @@ namespace ET.Client
             YIUILoadDI.ReleaseAction           = self.ReleaseAction;           //释放
             YIUILoadDI.VerifyAssetValidityFunc = self.VerifyAssetValidityFunc; //检查
             YIUILoadDI.ReleaseAllAction        = self.ReleaseAllAction;        //释放所有
+
+            await EventSystem.Instance.PublishAsync(self.Scene(), new YIUIEvent_YooAssetsLoad_Completed());
             return true;
         }
 

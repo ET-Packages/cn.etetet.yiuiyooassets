@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using YIUIFramework;
 
 namespace YooAsset.Editor
 {
@@ -23,10 +25,15 @@ namespace YooAsset.Editor
                 return false;
             }
 
+            if (data.AssetPath.IndexOf(YIUIConstHelper.Const.UISprites, StringComparison.Ordinal) >= 0 && data.AssetPath.IndexOf(YIUIConstHelper.Const.UIAtlasIgnore, StringComparison.Ordinal) < 0)
+            {
+                return false;
+            }
+
             return true;
         }
     }
-    
+
     /// <summary>
     /// 以收集器路径作为资源包名
     /// 注意：收集的所有文件打进一个资源包
