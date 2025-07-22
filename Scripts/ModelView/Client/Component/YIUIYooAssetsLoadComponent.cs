@@ -11,6 +11,6 @@ namespace ET.Client
     public class YIUIYooAssetsLoadComponent : Entity, IAwake, IDestroy
     {
         public Dictionary<int, AssetHandle> m_AllHandle = new();
-        public ResourcePackage              m_Package;
+        public ResourcePackage m_Package;
     }
 }

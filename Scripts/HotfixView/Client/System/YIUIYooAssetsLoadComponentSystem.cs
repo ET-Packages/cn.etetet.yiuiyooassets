@@ -35,13 +35,17 @@ namespace ET.Client
             }
 
             //YIUI会用到的各种加载 需要自行实现 当前是YooAsset 根据自己项目的资源管理器实现下面的方法
-            YIUILoadDI.LoadAssetFunc           = self.LoadAssetFunc;           //同步加载
-            YIUILoadDI.LoadAssetAsyncFunc      = self.LoadAssetAsyncFunc;      //异步加载
-            YIUILoadDI.ReleaseAction           = self.ReleaseAction;           //释放
+            YIUILoadDI.LoadAssetFunc = self.LoadAssetFunc; //同步加载
+            YIUILoadDI.LoadAssetAsyncFunc = self.LoadAssetAsyncFunc; //异步加载
+            YIUILoadDI.ReleaseAction = self.ReleaseAction; //释放
             YIUILoadDI.VerifyAssetValidityFunc = self.VerifyAssetValidityFunc; //检查
-            YIUILoadDI.ReleaseAllAction        = self.ReleaseAllAction;        //释放所有
+            YIUILoadDI.ReleaseAllAction = self.ReleaseAllAction; //释放所有
 
-            await EventSystem.Instance.PublishAsync(self.Scene(), new YIUIEvent_YooAssetsLoad_Completed());
+            await EventSystem.Instance.PublishAsync(self.Scene(), new YIUIEvent_YooAssetsLoad_Completed
+            {
+                YooAssetsLoad = self
+            });
+
             return true;
         }
 
@@ -68,9 +72,9 @@ namespace ET.Client
         /// <param name="arg3">类型</param>
         /// <returns>返回值(obj资源对象,唯一ID)</returns>
         private static async ETTask<(UnityEngine.Object, int)> LoadAssetAsyncFunc(this YIUIYooAssetsLoadComponent self,
-                                                                                  string                          arg1,
-                                                                                  string                          arg2,
-                                                                                  Type                            arg3)
+                                                                                  string arg1,
+                                                                                  string arg2,
+                                                                                  Type arg3)
         {
             EntityRef<YIUIYooAssetsLoadComponent> selfRef = self;
             var handle = self.m_Package.LoadAssetAsync(arg2, arg3);
