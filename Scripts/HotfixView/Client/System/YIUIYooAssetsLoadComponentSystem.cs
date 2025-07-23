@@ -43,7 +43,7 @@ namespace ET.Client
 
             await EventSystem.Instance.PublishAsync(self.Scene(), new YIUIEvent_YooAssetsLoad_Completed
             {
-                YooAssetsLoad = self
+                YooAssetsLoadRef = self
             });
 
             return true;
