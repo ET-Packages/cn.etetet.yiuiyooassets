@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
+using YIUIFramework;
 using YooAsset;
 
 namespace ET.Client
@@ -13,19 +14,28 @@ namespace ET.Client
         private static void Awake(this YIUIYooAssetsSpriteComponent self)
         {
             self.m_YIUILoadRef = self.GetParent<YIUILoadComponent>();
-            var tAssetHandle = YooAssets.LoadAssetSync<AtlasInfo>("AtlasConfig");
-            var tAtlasInfo = tAssetHandle.AssetObject as AtlasInfo;
-            if (tAtlasInfo == null) return;
-            self.m_SpritePathMap.Clear();
-            foreach (var tSpriteInfo in tAtlasInfo.sprites)
+            var atlasDataAssetHandle = YooAssets.LoadAssetSync<YIUIAtlasData>(YIUIConstAsset.AtlasDataName);
+            if (atlasDataAssetHandle == null || atlasDataAssetHandle.AssetObject == null)
             {
-                foreach (var tSpriteName in tSpriteInfo.spriteNames)
+                return;
+            }
+
+            var atlasData = atlasDataAssetHandle.AssetObject as YIUIAtlasData;
+            if (atlasData == null)
+            {
+                return;
+            }
+
+            self.m_SpritePathMap.Clear();
+            foreach (var info in atlasData.Infos)
+            {
+                foreach (var spriteName in info.SpriteNames)
                 {
-                    self.m_SpritePathMap.Add(tSpriteName, tSpriteInfo.atlasLocation);
+                    self.m_SpritePathMap.Add(spriteName, info.AtlasName);
                 }
             }
 
-            tAssetHandle.Release();
+            atlasDataAssetHandle.Release();
         }
 
         public static string GetSpriteAtlasPath(this YIUIYooAssetsSpriteComponent self, string spriteName)
