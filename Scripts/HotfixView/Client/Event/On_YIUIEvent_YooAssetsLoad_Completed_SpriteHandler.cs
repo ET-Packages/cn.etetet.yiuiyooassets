@@ -7,7 +7,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, YIUIEvent_YooAssetsLoad_Completed args)
         {
-            args.YooAssetsLoad.GetParent<YIUILoadComponent>().AddComponent<YIUIYooAssetsSpriteComponent>();
+            args.YooAssetsLoadRef.Entity.GetParent<YIUILoadComponent>().AddComponent<YIUIYooAssetsSpriteComponent>();
             await ETTask.CompletedTask;
         }
     }
