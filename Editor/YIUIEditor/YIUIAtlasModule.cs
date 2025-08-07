@@ -1,7 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;
@@ -9,18 +8,9 @@ using UnityEngine.U2D;
 
 namespace YIUIFramework.Editor
 {
-    [YIUIAutoMenu("图集", 10000)]
-    public partial class YIUIAtlasModule : BaseYIUIToolModule
+    public partial class YIUIAtlasModule
     {
-        [Button("文档", 30, Icon = SdfIconType.Link45deg, IconAlignment = IconAlignment.LeftOfText)]
-        [PropertyOrder(-99999)]
-        public void OpenDocument()
-        {
-            Application.OpenURL("");
-        }
-
-        [Button("创建图集信息")]
-        public static void CreateAtlas()
+        public static void RefreshAtlasData()
         {
             SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget, false);
 
