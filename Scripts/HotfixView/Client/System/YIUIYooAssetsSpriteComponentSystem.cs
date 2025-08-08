@@ -106,6 +106,7 @@ namespace ET.Client
             }
             else
             {
+                EntityRef<YIUIYooAssetsSpriteComponent> selfRef = self;
                 var spriteAtlas = await self.YIUILoad.LoadAssetAsync<SpriteAtlas>(atlasPath);
                 sprite = spriteAtlas?.GetSprite(spriteName);
                 if (sprite == null)
@@ -114,6 +115,7 @@ namespace ET.Client
                     return null;
                 }
 
+                self = selfRef;
                 if (!self.m_LoadedSprites.TryAdd(sprite, spriteAtlas))
                 {
                     Log.Error($"重复添加Sprite：{spriteName}");
