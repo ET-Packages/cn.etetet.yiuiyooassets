@@ -35,7 +35,9 @@ namespace ET.Client
             }
 
             //YIUI会用到的各种加载 需要自行实现 当前是YooAsset 根据自己项目的资源管理器实现下面的方法
+            #if !YIUIMACRO_SYNCLOAD_CLOSE
             YIUILoadDI.LoadAssetFunc = self.LoadAssetFunc; //同步加载
+            #endif
             YIUILoadDI.LoadAssetAsyncFunc = self.LoadAssetAsyncFunc; //异步加载
             YIUILoadDI.ReleaseAction = self.ReleaseAction; //释放
             YIUILoadDI.VerifyAssetValidityFunc = self.VerifyAssetValidityFunc; //检查
@@ -83,6 +85,7 @@ namespace ET.Client
             return self.LoadAssetHandle(handle);
         }
 
+        #if !YIUIMACRO_SYNCLOAD_CLOSE
         /// <summary>
         /// 同步加载
         /// </summary>
@@ -95,6 +98,7 @@ namespace ET.Client
             var handle = self.m_Package.LoadAssetSync(arg2, arg3);
             return self.LoadAssetHandle(handle);
         }
+        #endif
 
         //Demo中对YooAsset加载后的一个简单返回封装
         //只有成功加载才返回 否则直接释放

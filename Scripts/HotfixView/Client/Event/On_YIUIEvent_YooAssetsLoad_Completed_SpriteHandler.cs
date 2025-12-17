@@ -7,8 +7,8 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, YIUIEvent_YooAssetsLoad_Completed args)
         {
-            args.YooAssetsLoadRef.Entity.GetParent<YIUILoadComponent>().AddComponent<YIUIYooAssetsSpriteComponent>();
-            await ETTask.CompletedTask;
+            var yiuiAtlas = args.YooAssetsLoadRef.Entity.GetParent<YIUILoadComponent>().AddComponent<YIUIYooAssetsSpriteComponent>();
+            await yiuiAtlas.LoadAtlasAsync();
         }
     }
 }

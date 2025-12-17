@@ -9,10 +9,12 @@ namespace ET.Client
     [FriendOf(typeof(YIUILoadComponent))]
     public static partial class YIUILoadComponentSystem
     {
+        #if !YIUIMACRO_SYNCLOAD_CLOSE
         internal static T LoadAsset<T>(this YIUILoadComponent self, string resName) where T : UnityObject
         {
             return self.LoadAsset<T>("", resName);
         }
+        #endif
 
         internal static async ETTask<T> LoadAssetAsync<T>(this YIUILoadComponent self, string resName) where T : UnityObject
         {
@@ -31,10 +33,12 @@ namespace ET.Client
 
         #region 非泛型
 
+        #if !YIUIMACRO_SYNCLOAD_CLOSE
         internal static UnityObject LoadAsset(this YIUILoadComponent self, string resName, Type assetType)
         {
             return self.LoadAsset("", resName, assetType);
         }
+        #endif
 
         internal static async ETTask<UnityObject> LoadAssetAsync(this YIUILoadComponent self, string resName, Type assetType)
         {

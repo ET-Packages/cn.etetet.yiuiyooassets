@@ -5,6 +5,7 @@ using UnityObject = UnityEngine.Object;
 
 namespace ET.Client
 {
+    #if !YIUIMACRO_SYNCLOAD_CLOSE
     [Invoke(EYIUIInvokeType.Sync)]
     public class YIUIInvokeLoadSpriteSyncHandler : AInvokeEntityHandler<YIUIInvokeEntity_LoadSprite, Sprite>
     {
@@ -27,6 +28,7 @@ namespace ET.Client
             return sprite;
         }
     }
+    #endif
 
     [Invoke(EYIUIInvokeType.Async)]
     public class YIUIInvokeLoadSpriteAsyncHandler : AInvokeEntityHandler<YIUIInvokeEntity_LoadSprite, ETTask<Sprite>>

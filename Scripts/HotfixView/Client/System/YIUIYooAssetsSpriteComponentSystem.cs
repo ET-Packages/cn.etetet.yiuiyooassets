@@ -14,18 +14,22 @@ namespace ET.Client
         private static void Awake(this YIUIYooAssetsSpriteComponent self)
         {
             self.m_YIUILoadRef = self.GetParent<YIUILoadComponent>();
-            var atlasDataAssetHandle = YooAssets.LoadAssetSync<YIUIAtlasData>(YIUIConstAsset.AtlasDataName);
-            if (atlasDataAssetHandle == null || atlasDataAssetHandle.AssetObject == null)
-            {
-                return;
-            }
+        }
 
-            var atlasData = atlasDataAssetHandle.AssetObject as YIUIAtlasData;
+        public static async ETTask LoadAtlasAsync(this YIUIYooAssetsSpriteComponent self)
+        {
+            EntityRef<YIUIYooAssetsSpriteComponent> selfRef = self;
+            var handle = YooAssets.LoadAssetAsync<YIUIAtlasData>(YIUIConstAsset.AtlasDataName);
+
+            await handle.Task;
+
+            var atlasData = handle.AssetObject as YIUIAtlasData;
             if (atlasData == null)
             {
                 return;
             }
 
+            self = selfRef;
             self.m_SpritePathMap.Clear();
             foreach (var info in atlasData.Infos)
             {
@@ -35,7 +39,7 @@ namespace ET.Client
                 }
             }
 
-            atlasDataAssetHandle.Release();
+            handle.Release();
         }
 
         public static string GetSpriteAtlasPath(this YIUIYooAssetsSpriteComponent self, string spriteName)
@@ -43,6 +47,7 @@ namespace ET.Client
             return self.m_SpritePathMap.GetValueOrDefault(spriteName);
         }
 
+        #if !YIUIMACRO_SYNCLOAD_CLOSE
         public static Sprite GetSprite(this YIUIYooAssetsSpriteComponent self, string spriteName)
         {
             Sprite sprite = null;
@@ -82,6 +87,7 @@ namespace ET.Client
 
             return sprite;
         }
+        #endif
 
         public static async ETTask<Sprite> GetSpriteAsync(this YIUIYooAssetsSpriteComponent self, string spriteName)
         {
