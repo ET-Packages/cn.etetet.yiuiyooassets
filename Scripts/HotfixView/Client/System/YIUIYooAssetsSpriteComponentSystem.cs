@@ -47,48 +47,6 @@ namespace ET.Client
             return self.m_SpritePathMap.GetValueOrDefault(spriteName);
         }
 
-        #if !YIUIMACRO_SYNCLOAD_CLOSE
-        public static Sprite GetSprite(this YIUIYooAssetsSpriteComponent self, string spriteName)
-        {
-            Sprite sprite = null;
-
-            if (!self.m_SpritePathMap.TryGetValue(spriteName, out string atlasPath))
-            {
-                #if UNITY_EDITOR
-                if (!self.YIUILoad.VerifyAssetValidity(spriteName))
-                {
-                    Log.Error($"验证资产有效性 没有这个资源 图片无法加载 请检查 {spriteName}");
-                    return null;
-                }
-                #endif
-
-                sprite = self.YIUILoad.LoadAsset<Sprite>(spriteName);
-
-                if (sprite == null)
-                {
-                    Log.Error($"加载失败 没有这个资源 图片无法加载 请检查 {spriteName}");
-                }
-            }
-            else
-            {
-                var spriteAtlas = self.YIUILoad.LoadAsset<SpriteAtlas>(atlasPath);
-                sprite = spriteAtlas?.GetSprite(spriteName);
-                if (sprite == null)
-                {
-                    Log.Error($"找到图集{atlasPath},但是没有找不到Sprite：{spriteName}");
-                    return null;
-                }
-
-                if (!self.m_LoadedSprites.TryAdd(sprite, spriteAtlas))
-                {
-                    Log.Error($"重复添加Sprite：{spriteName}");
-                }
-            }
-
-            return sprite;
-        }
-        #endif
-
         public static async ETTask<Sprite> GetSpriteAsync(this YIUIYooAssetsSpriteComponent self, string spriteName)
         {
             Sprite sprite = null;
